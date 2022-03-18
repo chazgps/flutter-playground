@@ -1,9 +1,9 @@
 # Gradle files
 .gradle/
 build/
+gradle-wrapper.jar
 
-# Local configuration file (sdk path, etc)
-local.properties
+# Properties
 key.properties
 
 # Log/OS Files

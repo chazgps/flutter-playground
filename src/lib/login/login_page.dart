@@ -1,16 +1,20 @@
+import 'package:firebase_auth_module/login/register_user_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'componentes.dart';
 import 'constantes.dart' as constantes;
 import 'login_authenticator.dart';
+import 'tela_widget.dart';
+import 'ui/campo_entrada.dart';
 
 class LoginPage extends StatefulWidget {
-  late final LoginAuthenticator _autenticador;
+  late final AuthenticationService _autenticador;
   late final Function _onSuccess;
   late final Function _onFail;
 
   LoginPage(
-      {Key? key, required LoginAuthenticator authenticator, required Function onSuccess, required Function onFail})
+      {Key? key, required AuthenticationService authenticator, required Function onSuccess, required Function onFail})
       : super(key: key) {
     _autenticador = authenticator;
     _onSuccess = onSuccess;
@@ -23,141 +27,59 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late GlobalKey<FormState> _formKey;
-  late TextEditingController _loginController;
-  late TextEditingController _passwordController;
-  late FocusNode _focusNodeLogin;
-  late FocusNode _focusNodeSenha;
-  late bool _senhaVisivel;
+  late GlobalKey<CampoEntradaState> _campoEmailKey;
+  late GlobalKey<CampoEntradaState> _campoSenhaKey;
+
+  late CampoEntrada _campoEmail;
+  late CampoEntrada _campoSenha;
 
   @override
   void initState() {
     super.initState();
 
     _formKey = GlobalKey<FormState>();
-    _loginController = TextEditingController();
-    _passwordController = TextEditingController();
-    _focusNodeLogin = FocusNode();
-    _focusNodeSenha = FocusNode();
-    _senhaVisivel = false;
+    _campoEmailKey = GlobalKey<CampoEntradaState>();
+    _campoEmail = getCampoEmail(_campoEmailKey);
+
+    _campoSenhaKey = GlobalKey<CampoEntradaState>();
+    _campoSenha = getCampoSenha(_campoSenhaKey);
   }
 
   @override
   void dispose() {
-    _focusNodeLogin.dispose();
-    _focusNodeSenha.dispose();
-    _loginController.dispose();
-    _passwordController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        primary: false,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: MediaQuery.of(context).size.width,
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: IntrinsicHeight(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(40, 20, 40, 20),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.blue,
-                    Colors.indigo,
-                  ],
-                ),
-              ),
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Theme(
-                    data: ThemeData(
-                      inputDecorationTheme: const InputDecorationTheme(
-                        labelStyle: TextStyle(color: Colors.white),
-                        iconColor: Colors.white,
-                        errorStyle:
-                            TextStyle(fontSize: constantes.TAMANHO_FONTE_MENOR, color: constantes.COR_TEXTO_ERRO),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        _getLogo(),
-                        const SizedBox(height: 100),
-                        _getCampoLogin(context),
-                        const SizedBox(height: 10),
-                        _getCampoSenha(),
-                        const SizedBox(height: 10),
-                        _getOpcaoEsqueciSenha(),
-                        const SizedBox(height: 30),
-                        _getBotaoEntrar(),
-                        const Spacer(flex: 1),
-                        _getOrientacaoNovoCadastro(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+    return Tela(
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            getLogo(),
+            const SizedBox(height: 100),
+            getCampoEmail(_campoEmailKey),
+            const SizedBox(height: 10),
+            getCampoSenha(_campoSenhaKey),
+            const SizedBox(height: 10),
+            _getOpcaoEsqueciSenha(),
+            const SizedBox(height: 30),
+            getBotao('Entrar', onTap: () {
+              _autenticaUsuario(_campoEmailKey.currentState!.text, _campoSenhaKey.currentState!.text);
+            }),
+            const Spacer(flex: 1),
+            _getOrientacaoNovoCadastro(),
+          ],
         ),
-      ),
-    );
-  }
-
-  _getCampoLogin(BuildContext context) {
-    return _getTextField(
-      label: 'Login',
-      controller: _loginController,
-      focus: _focusNodeLogin,
-      validatorFunction: (valor) {
-        if (valor == null || valor.isEmpty) {
-          FocusScope.of(context).requestFocus(_focusNodeLogin);
-          return 'O login não pode ser vazio !';
-        } else {
-          return null;
-        }
-      },
-    );
-  }
-
-  _getCampoSenha() {
-    return _getTextField(
-        label: 'Senha',
-        controller: _passwordController,
-        focus: _focusNodeSenha,
-        inputAction: TextInputAction.done,
-        validatorFunction: (String? valor) {
-          if (valor == null || valor.isEmpty) {
-            FocusScope.of(context).requestFocus(_focusNodeSenha);
-            return 'A senha não pode ser vazia !';
-          } else {
-            return null;
-          }
-        },
-        campoDeSenha: true);
-  }
-
-  SizedBox _getLogo() {
-    return const SizedBox(
-      height: 100,
-      width: 200,
-      child: Placeholder(
-        color: Colors.red,
       ),
     );
   }
 
   Widget _getOrientacaoNovoCadastro() {
     return Padding(
-      padding: const EdgeInsets.only(top: 70),
+      padding: const EdgeInsets.only(bottom: 20),
       child: RichText(
         text: TextSpan(
           text: 'Ainda não é cadastrado ?',
@@ -167,8 +89,9 @@ class _LoginPageState extends State<LoginPage> {
               text: ' Clique aqui',
               style: const TextStyle(fontSize: constantes.TAMANHO_FONTE_MENOR, color: constantes.COR_TEXTO_REALCADO),
               recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  debugPrint('Cadastrar novo membro...');
+                ..onTap = () async {
+                  debugPrint('Cadastrar nova membro...');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterUserPage()));
                 },
             ),
           ],
@@ -177,98 +100,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  _getTextField(
-      {required String label,
-      required TextEditingController controller,
-      required FocusNode focus,
-      TextInputAction inputAction = TextInputAction.next,
-      required Function(String?) validatorFunction,
-      campoDeSenha = false}) {
-    return TextFormField(
-      controller: controller,
-      focusNode: focus,
-      obscureText: campoDeSenha && !_senhaVisivel,
-      onTap: () {
-        setState(() {});
-      },
-      onChanged: (String? valor) {
-        setState(() {});
-      },
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: constantes.TAMANHO_FONTE_CAMPO_ENTRADA,
-      ),
-      scrollPadding: const EdgeInsets.only(bottom: 200),
-      textInputAction: inputAction,
-      decoration: InputDecoration(
-        labelText: label,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: constantes.COR_BORDA),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: constantes.COR_BORDA_ERRO),
-        ),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: constantes.COR_BORDA_ERRO),
-        ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: constantes.COR_BORDA_ERRO, width: 2.0),
-        ),
-        suffixIcon: _getSuffixIcon(controller, campoDeSenha),
-      ),
-      onFieldSubmitted: (v) {
-        focus.nextFocus();
-      },
-      validator: (String? value) {
-        return validatorFunction(value);
-      },
-    );
-  }
-
-  Widget _getSuffixIcon(TextEditingController controller, bool obscureText) {
-    if (obscureText) {
-      return _getSuffixIconObscure();
-    } else {
-      return Visibility(
-        visible: controller.text.isNotEmpty,
-        child: IconButton(
-          iconSize: 16.0,
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            controller.clear();
-            // Remove o icone de limpar o campo
-            setState(() {});
-          },
-        ),
-      );
-    }
-  }
-
-  Widget _getSuffixIconObscure() {
-    return IconButton(
-      iconSize: 16.0,
-      icon: _senhaVisivel ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
-      onPressed: () {
-        setState(() {
-          _senhaVisivel = !_senhaVisivel;
-        });
-      },
-    );
-  }
-
-  Widget _getBotaoEntrar() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          autenticaUsuario(_loginController.text, _passwordController.text);
-        },
-        child: const Text('Entrar'),
-      ),
-    );
-  }
-
-  void autenticaUsuario(String login, String senha) async {
+  void _autenticaUsuario(String email, String senha) async {
     if (!_formKey.currentState!.validate()) {
       debugPrint('form com problema');
       return;
@@ -276,9 +108,9 @@ class _LoginPageState extends State<LoginPage> {
 
     debugPrint('form validado');
 
-    widget._autenticador.authenticate(login, senha).then((value) {
-      _loginController.clear();
-      _passwordController.clear();
+    widget._autenticador.login(email, senha).then((value) {
+      _campoEmailKey.currentState!.clear();
+      _campoSenhaKey.currentState!.clear();
       FocusScope.of(context).unfocus();
       setState(() {});
 
