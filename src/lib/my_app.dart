@@ -1,20 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_module/login/login_authenticator.dart';
 import 'package:flutter/material.dart';
 
 import 'login/google_authenticator.dart';
-import 'login/login_page.dart';
+import 'login/ui/login_page.dart';
+import 'login/usuario.dart';
 import 'principal_page.dart';
 import 'rotas.dart' as rotas;
 
 class MyApp extends StatelessWidget {
-  late FirebaseAuth _firebaseAuth;
   final navigatorKey = GlobalKey<NavigatorState>();
+  late AuthenticationService _authService;
 
-  MyApp({Key? key, required FirebaseAuth firebaseAuth}) : super(key: key) {
-    _firebaseAuth = firebaseAuth;
+  MyApp({Key? key}) : super(key: key) {
+    _authService = GoogleAuthenticator();
+    _authService.init();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,29 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: LoginPage(
-          authenticator: GoogleAuthenticator(_firebaseAuth),
-          onSuccess: () {
-            navigatorKey.currentState!.pushNamed(rotas.PAGINA_PRINCIPAL);
-          },
-          onFail: (String erro) {
-            showDialog(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) => AlertDialog(
-                insetPadding: EdgeInsets.all(20),
-                contentPadding: EdgeInsets.all(20),
-                title: Text('Erro'),
-                content: Text(erro),
-                actions: [
-                  TextButton(
-                    child: Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
-            );
-          }),
+          authenticator: _authService, onLoginSuccess: _irParaTelaPrincipal, onLoginFailure: _exibeMensagemErro),
       onGenerateRoute: (settings) {
         if (settings.name == rotas.PAGINA_PRINCIPAL) {
           return MaterialPageRoute(
@@ -54,6 +33,32 @@ class MyApp extends StatelessWidget {
           );
         }
       },
+    );
+  }
+
+  void _irParaTelaPrincipal(Usuario usuario) {
+    debugPrint('Navegando para tela principal');
+
+    navigatorKey.currentState!.pushReplacementNamed(rotas.PAGINA_PRINCIPAL);
+  }
+
+  void _exibeMensagemErro(String erro) {
+    showDialog(
+      context: navigatorKey.currentContext!,
+      builder: (BuildContext context) => AlertDialog(
+        insetPadding: const EdgeInsets.all(20),
+        contentPadding: const EdgeInsets.all(20),
+        title: const Text('Erro'),
+        content: Text(erro),
+        actions: [
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
     );
   }
 }

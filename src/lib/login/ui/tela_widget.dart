@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'constantes.dart' as constantes;
+import '../constantes.dart' as constantes;
 
 class Tela extends StatefulWidget {
   late final dynamic _titulo;
@@ -13,7 +13,7 @@ class Tela extends StatefulWidget {
 
   Tela(
       {Key? key,
-      dynamic? titulo,
+      dynamic titulo,
       Widget? body,
       List<Widget>? actions,
       Widget? floatingActionButton,

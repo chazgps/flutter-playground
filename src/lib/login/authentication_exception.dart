@@ -1,5 +1,9 @@
 class AuthenticationException implements Exception {
-  String message;
+  late String _message;
 
-  AuthenticationException(this.message);
+  AuthenticationException(String message) {
+    _message = message.replaceAll('Exception: ', '');
+  }
+
+  String get message => _message;
 }

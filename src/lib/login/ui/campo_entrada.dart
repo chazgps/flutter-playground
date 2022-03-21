@@ -4,6 +4,7 @@ import '../constantes.dart' as constantes;
 
 class CampoEntrada extends StatefulWidget {
   late String _label;
+  late TextInputType _inputType;
   late TextInputAction _inputAction;
   late Function(String?) _validatorFunction;
   late bool _campoDeSenha;
@@ -11,11 +12,13 @@ class CampoEntrada extends StatefulWidget {
   CampoEntrada(
       {Key? key,
       required String label,
+      TextInputType inputType = TextInputType.text,
       TextInputAction inputAction = TextInputAction.next,
       required Function(String?) validatorFunction,
       campoDeSenha = false})
       : super(key: key) {
     _label = label;
+    _inputType = inputType;
     _inputAction = inputAction;
     _validatorFunction = validatorFunction;
     _campoDeSenha = campoDeSenha;
@@ -49,20 +52,6 @@ class CampoEntradaState extends State<CampoEntrada> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: _controller,
-      focusNode: _focus,
-      obscureText: widget._campoDeSenha && !_senhaVisivel,
-      onTap: () {
-        setState(() {});
-      },
-      onChanged: (String? valor) {
-        setState(() {});
-      },
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: constantes.TAMANHO_FONTE_CAMPO_ENTRADA,
-      ),
-      scrollPadding: const EdgeInsets.only(bottom: 200),
-      textInputAction: widget._inputAction,
       decoration: InputDecoration(
         labelText: widget._label,
         enabledBorder: const UnderlineInputBorder(
@@ -79,6 +68,21 @@ class CampoEntradaState extends State<CampoEntrada> {
         ),
         suffixIcon: _getSuffixIcon(_controller, widget._campoDeSenha),
       ),
+      focusNode: _focus,
+      keyboardType: widget._inputType,
+      obscureText: widget._campoDeSenha && !_senhaVisivel,
+      onTap: () {
+        setState(() {});
+      },
+      onChanged: (String? valor) {
+        setState(() {});
+      },
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: constantes.TAMANHO_FONTE_CAMPO_ENTRADA,
+      ),
+      scrollPadding: const EdgeInsets.only(bottom: 200),
+      textInputAction: widget._inputAction,
       onFieldSubmitted: (v) {
         _focus.nextFocus();
       },
@@ -125,6 +129,10 @@ class CampoEntradaState extends State<CampoEntrada> {
 
   String get text {
     return _controller.text;
+  }
+
+  set text(String text) {
+    _controller.text = text;
   }
 
   void clear() {

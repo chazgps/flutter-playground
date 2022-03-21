@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ui/campo_entrada.dart';
+import 'campo_entrada.dart';
 
 Widget getLogo() {
   return const SizedBox(
@@ -12,14 +12,31 @@ Widget getLogo() {
   );
 }
 
+CampoEntrada getCampoNome(GlobalKey<CampoEntradaState> key) {
+  return CampoEntrada(
+    key: key,
+    label: 'Seu nome',
+    //inputType: TextInputType.name,
+    validatorFunction: (String? valor) {
+      if (valor == null || valor.isEmpty) {
+        key.currentState!.requestFocus();
+        return 'A nome não pode ser vazia !';
+      } else {
+        return null;
+      }
+    },
+  );
+}
+
 CampoEntrada getCampoEmail(GlobalKey<CampoEntradaState> key) {
   return CampoEntrada(
     key: key,
-    label: 'Login',
-    validatorFunction: (valor) {
+    label: 'Email',
+    //inputType: TextInputType.text,
+    validatorFunction: (String? valor) {
       if (valor == null || valor.isEmpty) {
         key.currentState!.requestFocus();
-        return 'O login não pode ser vazio !';
+        return 'A e-mail não pode ser vazia !';
       } else {
         return null;
       }
