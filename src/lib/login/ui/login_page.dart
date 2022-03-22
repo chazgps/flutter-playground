@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           body: Form(
             key: _formKey,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 const SizedBox(height: 30),
                 getLogo(),
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 getBotao('Entrar', onTap: () {
                   _autenticaUsuario(_campoEmailKey.currentState!.text, _campoSenhaKey.currentState!.text);
                 }),
-                const Spacer(flex: 1),
+                Spacer(flex: 1),
                 _getOrientacaoNovoCadastro(),
               ],
             ),
