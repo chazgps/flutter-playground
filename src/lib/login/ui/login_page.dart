@@ -129,6 +129,8 @@ class _LoginPageState extends State<LoginPage> {
 
     debugPrint('form validado');
 
+    FocusManager.instance.primaryFocus?.unfocus();
+
     _exibeAmpulheta.value = true;
 
     //await Future.delayed(Duration(seconds: 3));
@@ -138,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _getOpcaoEsqueciSenha() {
     return const Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.centerRight,
       child: Text(
         'Esqueci minha senha',
         style: TextStyle(fontSize: constantes.TAMANHO_FONTE_MENOR, color: constantes.COR_TEXTO_REALCADO),
@@ -153,8 +155,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onError(erro) {
+    erro = erro.message;
+
     _exibeAmpulheta.value = false;
 
-    widget._onLoginFailure(erro.toString());
+    widget._onLoginFailure(erro);
   }
 }

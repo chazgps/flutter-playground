@@ -66,13 +66,13 @@ class GoogleAuthenticator implements AuthenticationService {
 
       switch (e.code) {
         case 'user-not-found':
-          mensagem = 'Usuário não encontrado !';
+          mensagem = 'Usuário não encontrado !\n\nVerifique se digitou o endereço de e-mail corretamente.';
           break;
         case 'wrong-password':
           mensagem = 'Senha errada fornecida para este usuário !';
           break;
         case 'invalid-email':
-          mensagem = 'Usuário fornecido precisa ser um endereço de e-mail !';
+          mensagem = 'Endereço de e-mail inválido.\n\nDeve estar no formato xxx@yyyy.com !';
           break;
         default:
           mensagem = e.toString();
