@@ -4,7 +4,7 @@ import 'package:firebase_auth_module/login/ui/pages/reset_password_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../service/authenticator.dart';
+import '../../service/autenticador.dart';
 import '../constantes.dart' as constantes;
 import '../widgets/campo_entrada.dart';
 import '../widgets/componentes.dart' as ui;

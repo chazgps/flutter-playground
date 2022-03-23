@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 import 'authentication_exception.dart';
-import 'authenticator.dart';
+import 'autenticador.dart';
 import 'usuario.dart';
 
 class FirebaseAutenticador implements Autenticador {

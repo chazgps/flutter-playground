@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../service/authenticator.dart';
+import '../../service/autenticador.dart';
 import '../constantes.dart' as constantes;
 import '../widgets/campo_entrada.dart';
 import '../widgets/componentes.dart' as ui;
