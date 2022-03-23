@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../constantes.dart' as constantes;
+import '../../constantes.dart' as constantes;
 
 class Tela extends StatefulWidget {
   late final Widget? _body;
@@ -41,11 +41,12 @@ class _TelaState extends State<Tela> {
           ),
         ),
         child: GestureDetector(
-          onTap: () => Focus.of(context).unfocus(),
+          onTap: () {
+            _escondeTeclado(context);
+          },
           child: Scaffold(
             body: Container(
               height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topRight,
@@ -74,5 +75,12 @@ class _TelaState extends State<Tela> {
         ),
       ),
     );
+  }
+
+  void _escondeTeclado(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
   }
 }

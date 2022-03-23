@@ -1,11 +1,12 @@
 import 'package:firebase_auth_module/login/usuario.dart';
 import 'package:flutter/material.dart';
 
-import '../login_authenticator.dart';
-import 'campo_entrada.dart';
-import 'componentes.dart';
-import 'indicador_progresso_widget.dart';
-import 'tela_widget.dart';
+import '../../constantes.dart' as constantes;
+import '../../login_authenticator.dart';
+import '../widgets/campo_entrada.dart';
+import '../widgets/componentes.dart' as ui;
+import '../widgets/indicador_progresso_widget.dart';
+import '../widgets/tela_widget.dart';
 
 class RegisterUserPage extends StatefulWidget {
   late final AuthenticationService _autenticador;
@@ -56,22 +57,20 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
         Tela(
           body: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                getLogo(),
-                const SizedBox(height: 100),
-                getCampoNome(_campoNomeKey),
-                const SizedBox(height: 10),
-                getCampoEmail(_campoEmailKey),
-                const SizedBox(height: 10),
-                getCampoSenha(_campoSenhaKey),
-                const SizedBox(height: 30),
-                getBotao('Cadastrar', onTap: () {
-                  _cadastraUsuario(context, _campoNomeKey.currentState!.text, _campoEmailKey.currentState!.text,
-                      _campoSenhaKey.currentState!.text);
-                })
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(left: constantes.ESPACO_BORDA, right: constantes.ESPACO_BORDA),
+              child: Column(
+                children: [
+                  ui.getPainel(context, 'Cadastre-se !'),
+                  ui.getCampoNome(_campoNomeKey),
+                  ui.getCampoEmail(_campoEmailKey),
+                  ui.getCampoSenha(_campoSenhaKey),
+                  ui.getBotao('Cadastrar', onTap: () {
+                    _cadastraUsuario(context, _campoNomeKey.currentState!.text, _campoEmailKey.currentState!.text,
+                        _campoSenhaKey.currentState!.text);
+                  })
+                ],
+              ),
             ),
           ),
         ),
@@ -97,7 +96,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
 
     _exibeAmpulheta.value = true;
 
-    await Future.delayed(Duration(seconds: 3));
+    //await Future.delayed(const Duration(seconds: 3));
 
     widget._autenticador.cadastrarUsuario(nome, email, senha).then((usuario) {
       _exibeAmpulheta.value = false;

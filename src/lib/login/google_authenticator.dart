@@ -62,21 +62,7 @@ class GoogleAuthenticator implements AuthenticationService {
 
       return usuario;
     } on FirebaseAuthException catch (e) {
-      String? mensagem;
-
-      switch (e.code) {
-        case 'user-not-found':
-          mensagem = 'Usuário não encontrado !\n\nVerifique se digitou o endereço de e-mail corretamente.';
-          break;
-        case 'wrong-password':
-          mensagem = 'Senha errada fornecida para este usuário !';
-          break;
-        case 'invalid-email':
-          mensagem = 'Endereço de e-mail inválido.\n\nDeve estar no formato xxx@yyyy.com !';
-          break;
-        default:
-          mensagem = e.toString();
-      }
+      final String mensagem = traduzMensagem(e.code, e.message);
 
       throw AuthenticationException(mensagem);
     }
@@ -93,24 +79,18 @@ class GoogleAuthenticator implements AuthenticationService {
 
       return usuario;
     } on FirebaseAuthException catch (e) {
-      String? mensagem;
+      final String mensagem = traduzMensagem(e.code, e.message);
 
-      switch (e.code) {
-        case 'invalid-email':
-          mensagem = 'O endereço de e-mail está mal-formatado !';
-          break;
-        case 'weak-password':
-          mensagem = 'A senha é muito fraca !';
-          break;
-        case 'email-already-in-use':
-          mensagem = 'Email já em uso !\nSe você é dono deste e-mail, pode escolher a opção \'Esqueci a Senha\'';
-          break;
-        case 'nnetwork-request-failed':
-          mensagem = 'Um erro de rede (timeout, conexão interrompida ou host inalcançavel) ocorreu !';
-          break;
-        default:
-          mensagem = e.message ?? 'Erro código [$e.code]';
-      }
+      throw AuthenticationException(mensagem);
+    }
+  }
+
+  @override
+  Future<void> resetaSenha(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      final String mensagem = traduzMensagem(e.code, e.message);
 
       throw AuthenticationException(mensagem);
     }
@@ -119,5 +99,35 @@ class GoogleAuthenticator implements AuthenticationService {
   @override
   Future<void> logout() {
     return _auth.signOut();
+  }
+
+  String traduzMensagem(String codigo, String? mensagem) {
+    String mensagemNova;
+
+    switch (codigo) {
+      case 'invalid-email':
+        mensagemNova = 'Endereço de e-mail inválido.\n\nDeve estar no formato xxx@yyyy.com !';
+        break;
+      case 'email-already-in-use':
+        mensagemNova = 'Email já em uso !\nSe você é dono deste e-mail, pode escolher a opção \'Esqueci a Senha\'';
+        break;
+      case 'network-request-failed':
+        mensagemNova = 'Um erro de rede (timeout, conexão interrompida ou host inalcançavel) ocorreu !';
+        break;
+      case 'user-not-found':
+        mensagemNova = 'Usuário não encontrado !\n\nVerifique se digitou o endereço de e-mail corretamente.';
+        break;
+      case 'weak-password':
+        mensagemNova = 'A senha é muito fraca !';
+        break;
+      case 'wrong-password':
+        mensagemNova = 'Senha errada fornecida para este usuário !';
+        break;
+
+      default:
+        mensagemNova = mensagem ?? 'Erro código [$codigo]';
+    }
+
+    return mensagemNova;
   }
 }

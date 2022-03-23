@@ -8,4 +8,6 @@ abstract class AuthenticationService {
   Future<void> logout();
 
   Future<Usuario> cadastrarUsuario(String nomeUsuario, String email, String senha);
+
+  Future<void> resetaSenha(String email);
 }

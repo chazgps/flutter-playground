@@ -2,14 +2,15 @@ import 'package:firebase_auth_module/login/login_authenticator.dart';
 import 'package:flutter/material.dart';
 
 import 'login/google_authenticator.dart';
-import 'login/ui/login_page.dart';
+import 'login/ui/pages/login_page.dart';
+import 'login/ui/widgets/componentes.dart' as ui;
 import 'login/usuario.dart';
 import 'principal_page.dart';
 import 'rotas.dart' as rotas;
 
 class MyApp extends StatelessWidget {
   final navigatorKey = GlobalKey<NavigatorState>();
-  late AuthenticationService _authService;
+  late final AuthenticationService _authService;
 
   MyApp({Key? key}) : super(key: key) {
     _authService = GoogleAuthenticator();
@@ -23,9 +24,17 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        indicatorColor: Colors.tealAccent,
+        textTheme: TextTheme(
+            bodyText1: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.white),
+            bodyText2: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white)),
       ),
       home: LoginPage(
-          authenticator: _authService, onLoginSuccess: _irParaTelaPrincipal, onLoginFailure: _exibeMensagemErro),
+          authenticator: _authService,
+          onLoginSuccess: _irParaTelaPrincipal,
+          onLoginFailure: (erro) {
+            ui.exibeMensagem(navigatorKey.currentContext!, 'Erro', erro);
+          }),
       onGenerateRoute: (settings) {
         if (settings.name == rotas.PAGINA_PRINCIPAL) {
           return MaterialPageRoute(
@@ -37,28 +46,8 @@ class MyApp extends StatelessWidget {
   }
 
   void _irParaTelaPrincipal(Usuario usuario) {
-    debugPrint('Navegando para tela principal');
+    debugPrint('Navegando para tela principal para o usuário ${usuario.nome}');
 
     navigatorKey.currentState!.pushReplacementNamed(rotas.PAGINA_PRINCIPAL);
-  }
-
-  void _exibeMensagemErro(String erro) {
-    showDialog(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) => AlertDialog(
-        insetPadding: const EdgeInsets.all(20),
-        contentPadding: const EdgeInsets.all(20),
-        title: const Text('Erro'),
-        content: Text(erro),
-        actions: [
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),
-    );
   }
 }

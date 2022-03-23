@@ -1,14 +1,15 @@
-import 'package:firebase_auth_module/login/ui/register_user_page.dart';
+import 'package:firebase_auth_module/login/ui/pages/register_user_page.dart';
+import 'package:firebase_auth_module/login/ui/pages/reset_password_page.dart';
 import 'package:firebase_auth_module/login/usuario.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../constantes.dart' as constantes;
-import '../login_authenticator.dart';
-import 'campo_entrada.dart';
-import 'componentes.dart';
-import 'indicador_progresso_widget.dart';
-import 'tela_widget.dart';
+import '../../constantes.dart' as constantes;
+import '../../login_authenticator.dart';
+import '../widgets/campo_entrada.dart';
+import '../widgets/componentes.dart' as ui;
+import '../widgets/indicador_progresso_widget.dart';
+import '../widgets/tela_widget.dart';
 
 class LoginPage extends StatefulWidget {
   late final AuthenticationService _autenticador;
@@ -59,24 +60,22 @@ class _LoginPageState extends State<LoginPage> {
         Tela(
           body: Form(
             key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const SizedBox(height: 30),
-                getLogo(),
-                const SizedBox(height: 100),
-                getCampoEmail(_campoEmailKey),
-                const SizedBox(height: 10),
-                getCampoSenha(_campoSenhaKey),
-                const SizedBox(height: 10),
-                _getOpcaoEsqueciSenha(),
-                const SizedBox(height: 30),
-                getBotao('Entrar', onTap: () {
-                  _autenticaUsuario(_campoEmailKey.currentState!.text, _campoSenhaKey.currentState!.text);
-                }),
-                Spacer(flex: 1),
-                _getOrientacaoNovoCadastro(),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(left: constantes.ESPACO_BORDA, right: constantes.ESPACO_BORDA),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  ui.getPainel(context, 'Bem-Vindo !'),
+                  ui.getCampoEmail(_campoEmailKey),
+                  ui.getCampoSenha(_campoSenhaKey),
+                  _getOpcaoEsqueciSenha(),
+                  ui.getBotao('Entrar', onTap: () {
+                    _autenticaUsuario(_campoEmailKey.currentState!.text, _campoSenhaKey.currentState!.text);
+                  }),
+                  const Spacer(flex: 1),
+                  _getOrientacaoNovoCadastro(),
+                ],
+              ),
             ),
           ),
         ),
@@ -92,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _getOrientacaoNovoCadastro() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
       child: RichText(
         text: TextSpan(
           text: 'Ainda não é cadastrado ?',
@@ -134,17 +133,31 @@ class _LoginPageState extends State<LoginPage> {
 
     _exibeAmpulheta.value = true;
 
-    //await Future.delayed(Duration(seconds: 3));
+    //await Future.delayed(const Duration(seconds: 3));
 
     widget._autenticador.login(email, senha).then(_onLogin, onError: _onError);
   }
 
   Widget _getOpcaoEsqueciSenha() {
-    return const Align(
+    return Align(
       alignment: Alignment.centerRight,
-      child: Text(
-        'Esqueci minha senha',
-        style: TextStyle(fontSize: constantes.TAMANHO_FONTE_MENOR, color: constantes.COR_TEXTO_REALCADO),
+      child: GestureDetector(
+        onTap: () {
+          debugPrint('Indicar email para resetar a senha...');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResetPasswordPage(widget._autenticador),
+            ),
+          );
+        },
+        child: const Padding(
+          padding: EdgeInsets.only(top: 10, bottom: 10),
+          child: Text(
+            'Esqueci minha senha',
+            style: TextStyle(fontSize: constantes.TAMANHO_FONTE_MENOR, color: constantes.COR_TEXTO_REALCADO),
+          ),
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constantes.dart' as constantes;
+import '../../constantes.dart' as constantes;
 
 class CampoEntrada extends StatefulWidget {
   late String _label;
