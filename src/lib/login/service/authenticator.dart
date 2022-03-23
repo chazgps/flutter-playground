@@ -1,6 +1,6 @@
 import 'usuario.dart';
 
-abstract class AuthenticationService {
+abstract class Autenticador {
   Future<bool> init();
 
   Future<Usuario> login(String email, String senha);

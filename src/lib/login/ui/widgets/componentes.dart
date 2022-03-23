@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constantes.dart' as constantes;
+import '../constantes.dart' as constantes;
 import 'campo_entrada.dart';
 
 Widget getPainel(BuildContext context, String texto) {

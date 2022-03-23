@@ -3,10 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 
 import 'authentication_exception.dart';
-import 'login_authenticator.dart';
+import 'authenticator.dart';
 import 'usuario.dart';
 
-class GoogleAuthenticator implements AuthenticationService {
+class FirebaseAutenticador implements Autenticador {
   late FirebaseAuth _auth;
 
   @override
@@ -56,13 +56,13 @@ class GoogleAuthenticator implements AuthenticationService {
   @override
   Future<Usuario> login(String login, String password) async {
     try {
-      UserCredential credential = await _auth.signInWithEmailAndPassword(email: login, password: password);
+      final UserCredential credential = await _auth.signInWithEmailAndPassword(email: login, password: password);
 
-      Usuario usuario = Usuario(credential.user!.displayName!);
+      final Usuario usuario = Usuario(credential.user!.displayName!);
 
       return usuario;
     } on FirebaseAuthException catch (e) {
-      final String mensagem = traduzMensagem(e.code, e.message);
+      final String mensagem = _traduzMensagem(e.code, e.message);
 
       throw AuthenticationException(mensagem);
     }
@@ -71,15 +71,15 @@ class GoogleAuthenticator implements AuthenticationService {
   @override
   Future<Usuario> cadastrarUsuario(String nomeUsuario, String email, String senha) async {
     try {
-      UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: senha);
+      final UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: senha);
 
       await credential.user!.updateDisplayName(nomeUsuario);
 
-      Usuario usuario = Usuario(nomeUsuario);
+      final Usuario usuario = Usuario(nomeUsuario);
 
       return usuario;
     } on FirebaseAuthException catch (e) {
-      final String mensagem = traduzMensagem(e.code, e.message);
+      final String mensagem = _traduzMensagem(e.code, e.message);
 
       throw AuthenticationException(mensagem);
     }
@@ -90,7 +90,7 @@ class GoogleAuthenticator implements AuthenticationService {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      final String mensagem = traduzMensagem(e.code, e.message);
+      final String mensagem = _traduzMensagem(e.code, e.message);
 
       throw AuthenticationException(mensagem);
     }
@@ -101,7 +101,7 @@ class GoogleAuthenticator implements AuthenticationService {
     return _auth.signOut();
   }
 
-  String traduzMensagem(String codigo, String? mensagem) {
+  String _traduzMensagem(String codigo, String? mensagem) {
     String mensagemNova;
 
     switch (codigo) {

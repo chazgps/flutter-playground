@@ -1,24 +1,24 @@
+import 'package:firebase_auth_module/login/service/usuario.dart';
 import 'package:firebase_auth_module/login/ui/pages/register_user_page.dart';
 import 'package:firebase_auth_module/login/ui/pages/reset_password_page.dart';
-import 'package:firebase_auth_module/login/usuario.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../constantes.dart' as constantes;
-import '../../login_authenticator.dart';
+import '../../service/authenticator.dart';
+import '../constantes.dart' as constantes;
 import '../widgets/campo_entrada.dart';
 import '../widgets/componentes.dart' as ui;
 import '../widgets/indicador_progresso_widget.dart';
 import '../widgets/tela_widget.dart';
 
 class LoginPage extends StatefulWidget {
-  late final AuthenticationService _autenticador;
-  late Function(Usuario) _onLoginSuccess;
-  late Function _onLoginFailure;
+  late final Autenticador _autenticador;
+  late final Function(Usuario) _onLoginSuccess;
+  late final Function _onLoginFailure;
 
   LoginPage(
       {Key? key,
-      required AuthenticationService authenticator,
+      required Autenticador authenticator,
       required Function(Usuario) onLoginSuccess,
       required Function onLoginFailure})
       : super(key: key) {
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //await Future.delayed(const Duration(seconds: 3));
 
-    widget._autenticador.login(email, senha).then(_onLogin, onError: _onError);
+    widget._autenticador.login(email, senha).then(_onSuccess, onError: _onError);
   }
 
   Widget _getOpcaoEsqueciSenha() {
@@ -162,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLogin(usuario) {
+  void _onSuccess(usuario) {
     _exibeAmpulheta.value = false;
 
     widget._onLoginSuccess(usuario);

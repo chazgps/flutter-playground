@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../constantes.dart' as constantes;
-import '../../login_authenticator.dart';
+import '../../service/authenticator.dart';
+import '../constantes.dart' as constantes;
 import '../widgets/campo_entrada.dart';
 import '../widgets/componentes.dart' as ui;
 import '../widgets/indicador_progresso_widget.dart';
 import '../widgets/tela_widget.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  late final AuthenticationService _autenticador;
+  late final Autenticador _autenticador;
 
-  ResetPasswordPage(AuthenticationService authenticator, {Key? key}) : super(key: key) {
+  ResetPasswordPage(Autenticador authenticator, {Key? key}) : super(key: key) {
     _autenticador = authenticator;
   }
 
@@ -54,7 +54,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   _getOrientacao(),
                   ui.getCampoEmail(_campoEmailKey),
                   ui.getBotao(
-                    'Resetar a senha',
+                    'Enviar e-mail',
                     onTap: () {
                       _resetaSenha(_campoEmailKey.currentState!.text);
                     },
@@ -91,11 +91,31 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     widget._autenticador.resetaSenha(email).then(_onSuccess, onError: _onError);
   }
 
+  Widget _getOrientacao() {
+    const String mensagem =
+        'Não se preocupe, isso pode acontecer as vezes. Indique seu endereço de e-mail usado na sua conta e '
+        'enviaremos um e-mail para que você possa cadastrar uma nova senha.';
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            mensagem,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: constantes.TAMANHO_FONTE_ORIENTACAO_CORPO),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _onSuccess(usuario) {
     _exibeAmpulheta.value = false;
 
     const String titulo = 'Atenção';
-    const String mensagem = 'Um e-mail para o reset da senha foi enviado para o endereço fornecido !';
+    const String mensagem = 'Um e-mail foi enviado para o endereço fornecido.\n\n'
+        'Clique no link e cadastre uma nova senha !';
 
     ui.exibeMensagem(context, titulo, mensagem).then((value) => Navigator.pop(context));
   }
@@ -106,21 +126,5 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     _exibeAmpulheta.value = false;
 
     ui.exibeMensagem(context, 'Erro', erro);
-  }
-
-  Widget _getOrientacao() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Não se preocupe, isso pode acontecer as vezes. Indique seu endereço de e-mail usado na sua conta e '
-            'enviaremos um e-mail para que você possa cadastrar uma nova senha.',
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: constantes.TAMANHO_FONTE_ORIENTACAO_CORPO),
-          ),
-        ],
-      ),
-    );
   }
 }

@@ -1,19 +1,19 @@
-import 'package:firebase_auth_module/login/usuario.dart';
+import 'package:firebase_auth_module/login/service/usuario.dart';
 import 'package:flutter/material.dart';
 
-import '../../constantes.dart' as constantes;
-import '../../login_authenticator.dart';
+import '../../service/authenticator.dart';
+import '../constantes.dart' as constantes;
 import '../widgets/campo_entrada.dart';
 import '../widgets/componentes.dart' as ui;
 import '../widgets/indicador_progresso_widget.dart';
 import '../widgets/tela_widget.dart';
 
 class RegisterUserPage extends StatefulWidget {
-  late final AuthenticationService _autenticador;
-  late Function(Usuario) _onLoginSuccess;
-  late Function _onLoginFailure;
+  late final Autenticador _autenticador;
+  late final Function(Usuario) _onLoginSuccess;
+  late final Function _onLoginFailure;
 
-  RegisterUserPage(AuthenticationService autenticador,
+  RegisterUserPage(Autenticador autenticador,
       {Key? key, required Function(Usuario) onLoginSuccess, required Function onLoginFailure})
       : super(key: key) {
     _autenticador = autenticador;
@@ -98,11 +98,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
 
     //await Future.delayed(const Duration(seconds: 3));
 
-    widget._autenticador.cadastrarUsuario(nome, email, senha).then((usuario) {
-      _exibeAmpulheta.value = false;
+    widget._autenticador.cadastrarUsuario(nome, email, senha).then(_onSuccess, onError: _onError);
+  }
 
-      widget._onLoginSuccess(usuario);
-    }, onError: _onError);
+  void _onSuccess(usuario) {
+    _exibeAmpulheta.value = false;
+
+    widget._onLoginSuccess(usuario);
   }
 
   void _onError(erro) {

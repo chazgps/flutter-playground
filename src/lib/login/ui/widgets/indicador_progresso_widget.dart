@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//ignore: must_be_immutable
 class IndicadorProgresso extends StatelessWidget {
   late final bool _visivel;
   late final String? _mensagem;

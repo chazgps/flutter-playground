@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../constantes.dart' as constantes;
+import '../constantes.dart' as constantes;
 
 class CampoEntrada extends StatefulWidget {
-  late String _label;
-  late TextInputType _inputType;
-  late TextInputAction _inputAction;
-  late Function(String?) _validatorFunction;
-  late bool _campoDeSenha;
+  late final String _label;
+  late final TextInputType _inputType;
+  late final TextInputAction _inputAction;
+  late final Function(String?) _validatorFunction;
+  late final bool _campoDeSenha;
 
   CampoEntrada(
       {Key? key,

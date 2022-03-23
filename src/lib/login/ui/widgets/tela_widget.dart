@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../constantes.dart' as constantes;
+import '../constantes.dart' as constantes;
 
 class Tela extends StatefulWidget {
   late final Widget? _body;
