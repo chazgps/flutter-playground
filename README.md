@@ -8,7 +8,7 @@ Foi criado de forma simples e para meu estudo da API Firebase Authentication.
 Arquitetura
 ===========
 
-Para não deixar o app dependente desta implementação, e permitir que uma outra API fosse usada de forma fácil posteriormente, criei uma interface ([Autenticador](./src/lib/login/service/authenticator.dart)) e implementei as chamadas a API do Firebase implementando esta interface ([FirebaseAutenticador](./src/lib/login/service/firebase_autenticador.dart)).
+Para não deixar o app dependente desta implementação, e permitir que uma outra API fosse usada de forma fácil posteriormente, criei uma interface ([Autenticador](./src/lib/login/service/autenticador.dart)) e implementei as chamadas a API do Firebase implementando esta interface ([FirebaseAutenticador](./src/lib/login/service/firebase_autenticador.dart)).
 
 Caso seja necessário trocar por uma outra forma de autenticação (Ex: uma API própria), basta implementar a interface **Autenticador** e fornecer ao widget [LoginPage](./src/lib/login/ui/pages/login_page.dart) esta implementação para que seja usada pelas telas deste aplicativo.
 
