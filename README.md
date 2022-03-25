@@ -8,3 +8,4 @@ Experimentos
 
 - [firebase_auth](./firebase_auth) - Implementação de autenticação de usuário usando a Firebase Authentication API.
 - [firebase_firestore](./firebase_firestore) - Implementação de um app estilo 'To-Do List' usando a Firebase Firestore API.
+- [cronômetro](./cronômetro) - Estudo sobre reatividade utilizando ValueNotifier.
