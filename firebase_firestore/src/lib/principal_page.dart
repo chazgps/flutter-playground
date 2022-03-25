@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'app.dart';
 import 'service/task.dart';
 import 'service/todo_service.dart';
 
 class PrincipalPage extends StatefulWidget {
   late final TodoService _todoService;
+  late final App _app;
 
-  PrincipalPage(TodoService todoService, {Key? key}) : super(key: key) {
+  PrincipalPage(App app, TodoService todoService, {Key? key}) : super(key: key) {
+    _app = app;
     _todoService = todoService;
   }
 
@@ -16,12 +19,8 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  late ValueNotifier<List<Task>> _tasks;
-
   _PrincipalPageState() {
     debugPrint('constructor');
-
-    _tasks = ValueNotifier<List<Task>>([]);
   }
 
   @override
@@ -139,15 +138,15 @@ class _PrincipalPageState extends State<PrincipalPage> {
   }
 
   Widget _getListaTarefas(List<Task> tasks) {
-    _tasks.value = tasks;
+    widget._app.tasks.value = tasks;
 
     return ValueListenableBuilder(
-      valueListenable: _tasks,
+      valueListenable: widget._app.tasks,
       builder: (BuildContext context, List<Task> value, Widget? child) {
         return ListView.builder(
-          itemCount: _tasks.value.length,
+          itemCount: widget._app.tasks.value.length,
           itemBuilder: (BuildContext context, int index) {
-            final Task task = _tasks.value.elementAt(index);
+            final Task task = widget._app.tasks.value.elementAt(index);
             final String mensagem = task.id + ' - ' + task.description;
 
             return Dismissible(
@@ -175,7 +174,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
     widget._todoService.add(task).then((value) {
       debugPrint('Tarefa criada id => ' + task.id);
 
-      _tasks.value = List.from(_tasks.value)..add(task);
+      widget._app.tasks.value = List.from(widget._app.tasks.value)..add(task);
 
       _showSnackBar('Tarefa criada !');
     });
@@ -187,7 +186,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
 
   void _apagaTarefa(BuildContext context, Task task) {
     widget._todoService.delete(task).then((value) {
-      _tasks.value = List.from(_tasks.value)..remove(task);
+      widget._app.tasks.value = List.from(widget._app.tasks.value)..remove(task);
 
       _showSnackBar('Tarefa apagada !');
     });
