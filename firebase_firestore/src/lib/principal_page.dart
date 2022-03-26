@@ -1,63 +1,42 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'app.dart';
 import 'service/task.dart';
 import 'service/todo_service.dart';
+import 'componentes.dart' as ui;
 
-class PrincipalPage extends StatefulWidget {
+class PrincipalPage extends StatelessWidget {
   late final TodoService _todoService;
   late final App _app;
 
-  PrincipalPage(App app, TodoService todoService, {Key? key}) : super(key: key) {
-    _app = app;
-    _todoService = todoService;
-  }
-
-  @override
-  _PrincipalPageState createState() => _PrincipalPageState();
-}
-
-class _PrincipalPageState extends State<PrincipalPage> {
-  _PrincipalPageState() {
-    debugPrint('constructor');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    debugPrint('initState');
-  }
+  PrincipalPage(this._app, this._todoService);
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build');
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de Tarefas'),
       ),
-      body: _getCorpoPagina(),
+      body: _getCorpoPagina(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: _insereTarefa,
+        onPressed: () => _insereTarefa(context),
         child: Icon(Icons.add),
       ),
     );
   }
 
-  Widget _getCorpoPagina() {
+  Widget _getCorpoPagina(BuildContext context) {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(20),
       child: FutureBuilder<List<Task>>(
-        future: widget._todoService.queryAll(),
+        future: _todoService.queryAll(),
         builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
           if (snapshot.hasError) {
-            return _getMensagemErro(snapshot.error);
+            return _getMensagemErro(context, snapshot.error);
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
-            return _getListaTarefas(snapshot.data!);
+            return _getListaTarefas(context, snapshot.data!);
           }
 
           return _getMensagemEspera();
@@ -66,95 +45,45 @@ class _PrincipalPageState extends State<PrincipalPage> {
     );
   }
 
-  AlertDialog _getMensagemErro(error) {
+  AlertDialog _getMensagemErro(BuildContext context, error) {
     final String mensagem = error.message.toString();
-    return _exibeMensagem(context, 'Erro', mensagem);
-  }
-
-  AlertDialog _exibeMensagem(BuildContext context, String titulo, String mensagem) {
-    return _getAlertDialog(
-      titulo,
-      Text(mensagem),
-      [
-        _getBotao('OK', onTap: () {
-          Navigator.of(context).pop();
-        })
-      ],
-    );
-  }
-
-  Future<void> _inputDialog(BuildContext context,
-      {required String titulo, required Function(String) onSubmit, required VoidCallback onCancel}) async {
-    TextEditingController textFieldController = TextEditingController();
-
-    return showDialog(
-        context: context,
-        builder: (context) {
-          final TextField campo = TextField(
-            controller: textFieldController,
-          );
-
-          VoidCallback callbackOK = () {
-            onSubmit(textFieldController.text);
-          };
-
-          VoidCallback callbackCancelar = () {
-            onCancel();
-          };
-
-          final List<TextButton> botoes = [_getBotao('OK', onTap: callbackOK), _getBotao('Cancelar', onTap: callbackCancelar)];
-
-          return _getAlertDialog(titulo, campo, botoes);
-        });
-  }
-
-  _getAlertDialog(String titulo, Widget corpo, List<TextButton> botoes) {
-    return AlertDialog(
-      insetPadding: const EdgeInsets.all(20),
-      contentPadding: const EdgeInsets.all(20),
-      title: Text(titulo),
-      content: corpo,
-      actions: botoes,
-    );
-  }
-
-  TextButton _getBotao(String titulo, {required VoidCallback onTap}) {
-    return TextButton(
-      child: Text(titulo),
-      onPressed: () {
-        onTap();
-      },
-    );
+    return ui.exibeMensagem(context, 'Erro', mensagem);
   }
 
   Widget _getMensagemEspera() {
-    return SizedBox(
-      height: 100,
-      width: 100,
-      child: CircularProgressIndicator(
-        color: Colors.blue,
+    return Center(
+      child: SizedBox(
+        height: 100,
+        width: 100,
+        child: CircularProgressIndicator(strokeWidth: 8,
+          color: Colors.blue,
+        ),
       ),
     );
   }
 
-  Widget _getListaTarefas(List<Task> tasks) {
-    widget._app.tasks.value = tasks;
+  Widget _getListaTarefas(BuildContext context, List<Task> tasks) {
+    _app.tasks.value = tasks;
 
     return ValueListenableBuilder(
-      valueListenable: widget._app.tasks,
+      valueListenable: _app.tasks,
       builder: (BuildContext context, List<Task> value, Widget? child) {
         return ListView.builder(
-          itemCount: widget._app.tasks.value.length,
+          itemCount: _app.tasks.value.length,
           itemBuilder: (BuildContext context, int index) {
-            final Task task = widget._app.tasks.value.elementAt(index);
-            final String mensagem = task.id + ' - ' + task.description;
+            final Task task = _app.tasks.value.elementAt(index);
+            final String mensagem = task.description;
+            final String subtitulo = 'id: ${task.id}';
 
             return Dismissible(
               onDismissed: (DismissDirection direction) {
                 _apagaTarefa(context, task);
               },
               key: UniqueKey(),
-              child: ListTile(title: Text(mensagem)),
+              child: ListTile(
+                  title: Text(mensagem),
+                  subtitle: Text(subtitulo),
+                  onTap: () => _alteraTarefaDialog(context, task)),
             );
           },
         );
@@ -162,40 +91,43 @@ class _PrincipalPageState extends State<PrincipalPage> {
     );
   }
 
-  void _insereTarefa() async {
-    _inputDialog(context, titulo: 'Nova tarefa', onSubmit: _cadastraTarefa, onCancel: _desisteCadastro);
-  }
+  void _insereTarefa(BuildContext context) async {
+    ui.inputDialog(context, titulo: 'Nova tarefa', onSubmit: (String tarefa) {
+      final Task task = Task(tarefa);
 
-  void _cadastraTarefa(String tarefa) {
-    Navigator.pop(context);
+      _todoService.add(task).then((value) {
+        debugPrint('Tarefa criada id => ' + task.id);
 
-    final Task task = Task(tarefa);
+        _app.tasks.value = List.from(_app.tasks.value)..add(task);
 
-    widget._todoService.add(task).then((value) {
-      debugPrint('Tarefa criada id => ' + task.id);
-
-      widget._app.tasks.value = List.from(widget._app.tasks.value)..add(task);
-
-      _showSnackBar('Tarefa criada !');
+        ui.showSnackBar(context, 'Tarefa criada !');
+      });
     });
-  }
-
-  void _desisteCadastro() {
-    Navigator.pop(context);
   }
 
   void _apagaTarefa(BuildContext context, Task task) {
-    widget._todoService.delete(task).then((value) {
-      widget._app.tasks.value = List.from(widget._app.tasks.value)..remove(task);
+    _todoService.delete(task).then((value) {
+      _app.tasks.value = List.from(_app.tasks.value)..remove(task);
 
-      _showSnackBar('Tarefa apagada !');
+      ui.showSnackBar(context, 'Tarefa apagada !');
     });
   }
 
-  void _showSnackBar(String mensagem) {
-    final SnackBar snackBar = SnackBar(
-      content: Text(mensagem, style: TextStyle(fontSize: 20)),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  void _alteraTarefaDialog(BuildContext context, Task task) async {
+    ui.inputDialog(context,
+        titulo: 'Alterar tarefa',
+        initialValue: task.description, onSubmit: (valor) {
+      // Vamos fazer uma cópia da Task para não atualizar o objeto
+      // original ainda...só atualizaremos se a operação tiver sucesso
+      Task clone = task.copyWith(id: task.id, description: valor);
+
+      _todoService.update(clone).then((value) {
+        task.description = valor;
+
+        _app.tasks.value = List.from(_app.tasks.value);
+
+        ui.showSnackBar(context, 'Tarefa alterada !');
+      });
+    });
   }
 }
