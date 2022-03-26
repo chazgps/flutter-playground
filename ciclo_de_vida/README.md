@@ -14,4 +14,4 @@ o mixin [LifeCycleMonitor](./src/lib/life_cycle_monitor_mixin.dart) a classe que
 
 2) No construtor da classe chamar o método *initLifeCycleMonitor()*.
    
-3) sobrescrever os métodos *onPause* e *onResume* para receber as notificações de quando o app vai para 2o plano e volta para 1o plano.
+3) Sobrescrever os métodos *onPause* e *onResume* para receber as notificações de quando o app vai para 2o plano e volta para 1o plano.
