@@ -6,6 +6,7 @@ Este repositório contém pequenos apps para meus estudos com Flutter, portanto 
 Experimentos
 ============
 
+- [platform_channel](./platform_channel) - Abrindo o app de calculadora usando para isso Platform Channel.
 - [tts](./tts) - Estudo sobre Síntese de Fala (Text-to-Speech).
 - [on_pause](./ciclo_de_vida) - Estudo sobre ciclo de vida (pause/resume) de Stateless e StatefulWidgets.
 - [cronômetro](./cronometro) - Estudo sobre reatividade utilizando ValueNotifier.
