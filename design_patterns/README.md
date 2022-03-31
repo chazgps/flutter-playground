@@ -12,4 +12,4 @@ Para executar, entre na pasta *bin* do projeto e execute o arquivo *.EXE*
 Padrões de criação (Creational Patterns)
 ========================================
 
-- [Singleton](./creation/singleton)
+- [Singleton](./creational/singleton)
