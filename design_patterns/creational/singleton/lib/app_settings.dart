@@ -1,5 +1,5 @@
 class AppSettings {
-  // Instância a classe e mantém privada
+  // Instancia um objeto da classe e mantém a instância privada
   static final AppSettings _singleton = AppSettings._internal();
 
   // Retorna sempre a mesma instância
