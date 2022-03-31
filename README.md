@@ -13,4 +13,5 @@ Experimentos
 - [firebase_firestore](./firebase_firestore) - Implementação de um app estilo 'To-Do List' usando a Firebase Firestore API.
 - [platform_channel](./platform_channel) - Abrindo o app de calculadora usando para isso Platform Channel.
 - [tema_escuro](./tema_escuro) - Implementação de troca de tema da aplicação de claro para escuro ou seguindo o definido no sistema.
+- [design_patterns](./design_patterns) - Estudo sobre design patterns implementados em Dart.
 
