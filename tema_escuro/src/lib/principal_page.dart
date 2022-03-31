@@ -8,7 +8,14 @@ class PrincipalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tema ' + _getNomeTema()),
+        title: ValueListenableBuilder(
+          valueListenable: Configuracoes.tema,
+          builder: (context, tema, child) {
+            return Text(
+              'Tema ' + _getNomeTema(),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
