@@ -3,13 +3,20 @@ Sobre o app
 
 Estudo sobre design patterns em Dart.
 
-A idéia é ilustrar design patterns na linguagem Dart, servindo de referência de implementação segundo minha visão.
+A idéia é ilustrar design patterns na linguagem Dart.
 
-Cada design pattern tem o seu próprio projeto Dart CLI (command-line interface).
+A aplicação exemplo foi codificada como um projeto projeto Dart CLI (command-line interface), onde
+através da linha de comando pode ser passado valores indicando quais padrões se quer que sejam
+demonstrados.
 
-Para executar, entre na pasta *bin* do projeto e execute o arquivo *.EXE*
+Exemplo:
+    - bin\cli.exe singleton
+
+Irá executar o exemplo demonstrando o padrão Singleton.
 
 Padrões de criação (Creational Patterns)
 ========================================
 
-- [Singleton](./creational/singleton)
+- **Singleton** - Garante a existência de apenas uma instância de uma classe não importa a quantidade de vezes que se tente instânciar um novo objeto. 
+
+- **Factory** - Define uma interface para criar um objeto mas é uma das subclasses que decidirá qual classe instanciar um objeto.

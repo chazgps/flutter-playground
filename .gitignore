@@ -40,3 +40,6 @@ build/
 # Projeto
 bat/
 ios/
+
+# Dart
+*.exe
