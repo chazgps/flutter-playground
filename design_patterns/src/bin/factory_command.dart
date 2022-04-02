@@ -1,5 +1,6 @@
 import 'package:args/command_runner.dart';
-import 'package:cli/factory/hash.dart';
+import 'package:cli/factory/hash_generator_abstract.dart';
+import 'package:cli/factory/hash_factory.dart';
 
 class FactoryCommand extends Command {
   @override
@@ -17,22 +18,21 @@ class FactoryCommand extends Command {
   void run() {
     final String hash = argResults!['hash'];
 
-    IHashGeneratorFactory hashGenerator;
+    IHashGenerator geradorHash;
 
     switch (hash) {
       case 'md5':
-        hashGenerator = MD5Factory();
+        geradorHash = HashFactory().getHashGenerator(hashType.md5);
         break;
       case 'sha1':
-        hashGenerator = SHA1Factory();
+        geradorHash = HashFactory().getHashGenerator(hashType.sha1);
         break;
       default:
         throw Exception('Função de Hash inválida');
     }
 
-    final IHashGenerator generator = hashGenerator.createHashGenerator();
     final String stringEntrada = 'Batatinha frita 1,2,3.';
     print('Conteúdo de entrada = "$stringEntrada"');
-    print('Hash calculado com $hash: ' + generator.hash(stringEntrada));
+    print('Hash calculado com $hash: ' + geradorHash.hash(stringEntrada));
   }
 }
