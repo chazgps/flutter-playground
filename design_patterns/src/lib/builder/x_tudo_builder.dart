@@ -1,5 +1,4 @@
 import 'package:cli/builder/ingrediente.dart';
-import 'package:cli/builder/lanche.dart';
 import 'package:cli/builder/lanche_builder.dart';
 
 class XTudoBuilder extends LancheBuilder {
@@ -7,7 +6,6 @@ class XTudoBuilder extends LancheBuilder {
 
     @override
   LancheBuilder adicionaRecheio() {
-    super.adicionaRecheio();
 
     getLanche().adicionarIngrediente(Carne());
     getLanche().adicionarIngrediente(Tomate());

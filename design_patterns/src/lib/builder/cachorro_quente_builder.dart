@@ -6,16 +6,12 @@ class CachorroQuenteBuilder extends LancheBuilder {
 
   @override
   LancheBuilder adicionaRecheio() {
-    super.adicionaRecheio();
-
     getLanche().adicionarIngrediente(Salsicha());
     return this;
   }
 
   @override
   LancheBuilder adicionaMolhos() {
-    super.adicionaMolhos();
-
     getLanche().adicionarIngrediente(Catchup());
     getLanche().adicionarIngrediente(Mostarda());
 
