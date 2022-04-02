@@ -19,13 +19,13 @@ class Lanche {
 
   String get nome => _nome;
 
-  String get preco {
-    double preco = 0.0;
+  double get preco {
+    double precoFinal = 0.0;
 
     for (var ingrediente in _ingredientes) {
-      preco += ingrediente.preco;
+      precoFinal += ingrediente.preco;
     }
 
-    return preco.toStringAsFixed(2);
+    return precoFinal;
   }
 }

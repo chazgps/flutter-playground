@@ -16,3 +16,4 @@ dependencies:
   args: ^2.3.0
   convert: ^3.0.1
   crypto: ^3.0.1
+  intl: ^0.17.0

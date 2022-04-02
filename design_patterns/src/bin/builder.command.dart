@@ -4,6 +4,7 @@ import 'package:cli/builder/lanche.dart';
 import 'package:cli/builder/lanche_builder.dart';
 import 'package:cli/builder/montador.dart';
 import 'package:cli/builder/x_tudo_builder.dart';
+import 'package:intl/intl.dart';
 
 class BuilderCommand extends Command {
   @override
@@ -37,6 +38,8 @@ class BuilderCommand extends Command {
     final Montador montador = Montador();
     final Lanche lanche = montador.montaLanche(receita);
 
+    final String preco = NumberFormat.simpleCurrency(locale:'pt_BR').format(lanche.preco);
+
     final String titulo = "Design Pattern: Builder";
 
     print(titulo);
@@ -44,6 +47,6 @@ class BuilderCommand extends Command {
 
     print('Lanche pedido: ${lanche.nome}');
     print('Ingredientes: ${lanche.ingredientes}');
-    print('Preço: ${lanche.preco}');
+    print('Preço: $preco');
   }
 }
