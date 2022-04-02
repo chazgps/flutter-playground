@@ -20,3 +20,5 @@ Padrões de criação (Creational Patterns)
 - **Singleton** - Garante a existência de apenas uma instância de uma classe não importa a quantidade de vezes que se tente instânciar um novo objeto. 
 
 - **Factory** - Define uma interface para criar um objeto mas é uma das subclasses que decidirá qual classe instanciar um objeto.
+
+- **Builder** - Separa a construção de um objeto complexo em partes menores, simplificando este processo e permitindo a customização do objeto a ser instânciado.

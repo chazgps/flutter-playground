@@ -24,6 +24,20 @@
             "type": "dart",
             "program":"bin/cli.dart",
             "args": ["factory","--hash=sha1"]
+        },
+        {
+            "name": "builder com hotdog",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["builder","--lanche=hotdog"]
+        },
+        {
+            "name": "builder com x-tudo",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["builder","--lanche=x-tudo"]
         }
 
     ]
