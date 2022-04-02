@@ -31,7 +31,8 @@ class FactoryCommand extends Command {
     }
 
     final IHashGenerator generator = hashGenerator.createHashGenerator();
-    print('Conteúdo de entrada = "Batatinha frita 1,2,3."');
-    print('Hash calculado com $hash: ' + generator.hash('Teste'));
+    final String stringEntrada = 'Batatinha frita 1,2,3.';
+    print('Conteúdo de entrada = "$stringEntrada"');
+    print('Hash calculado com $hash: ' + generator.hash(stringEntrada));
   }
 }
