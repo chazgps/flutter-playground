@@ -42,8 +42,8 @@ class BuilderCommand extends Command {
     print(titulo);
     print(''.padRight(titulo.length, '=') + '\n');
 
-    print('Lanche pedido: ' + lanche.nome);
-    print('Ingredientes: ' + lanche.ingredientes);
+    print('Lanche pedido: ${lanche.nome}');
+    print('Ingredientes: ${lanche.ingredientes}');
     print('Preço: ${lanche.preco}');
   }
 }
