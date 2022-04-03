@@ -37,3 +37,16 @@ Separa a construção de um objeto complexo em partes menores, permitindo a cust
 No exemplo, trabalho com o exemplo de um trailer de lanche.
 A pessoa que irá montar o lanche (Montador), recebe o pedido do cliente de qual lanche ela quer e ele deve seguir uma Receita para montar o lanche conforme o tipo.
 Para este tipo de situação onde o lanche pode ser customizável, tendo um alguns ingrediente e em outros não, ou passos adicionais, o padrão Builder se encaixa perfeitamente para fazer a construção do (objeto) Lanche.
+
+---
+
+### **Prototype**
+
+Define a maneira pela qual obteremos uma cópia de um objeto de forma total ou parcial.
+A implementação deste design pattern pode ser feita tanto por meio de uma interface que especifica a operação de clonagem (ex: clone()), como por meio de uma classe concreta.
+
+Neste exemplo, existem as duas implementações, a baseada em interface e a baseada em classe concreta, que a do padrão utilizado no Flutter onde muitos objetos possuem um método copyWith().
+
+No exemplo, a partir de 1 indivíduo (Adão), geremos uma população de mais 999 indivíduos via clonagem 
+do objeto inicial (Adão). A cada clonagem, um sorteio entre 3 características (idade, sexo e estado civil) é feito randomizar a população em algum destas 3 características.
+Executando várias vezes, nota-se um certo padrão na distribuição da população por faixa etária.

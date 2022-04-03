@@ -38,7 +38,20 @@
             "type": "dart",
             "program":"bin/cli.dart",
             "args": ["builder","--lanche=x-tudo"]
+        },
+        {
+            "name": "prototype com copyWith()",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["prototype","--metodo=copyWith"]
+        },
+        {
+            "name": "prototype com clone()",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["prototype","--metodo=clone"]
         }
-
     ]
 }
