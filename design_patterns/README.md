@@ -45,8 +45,8 @@ Para este tipo de situação onde o lanche pode ser customizável, tendo um algu
 Define a maneira pela qual obteremos uma cópia de um objeto de forma total ou parcial.
 A implementação deste design pattern pode ser feita tanto por meio de uma interface que especifica a operação de clonagem (ex: clone()), como por meio de uma classe concreta.
 
-Neste exemplo, existem as duas implementações, a baseada em interface e a baseada em classe concreta, que a do padrão utilizado no Flutter onde muitos objetos possuem um método copyWith().
+Neste exemplo, existem as duas implementações deste design pattern, uma baseada em interface e via método *clone()*, utilizada em algumas linguagens, e outra baseada em classe concreta via um método *copyWith()*, que o padrão utilizado no Flutter para clonagem de objetos.
 
-No exemplo, a partir de 1 indivíduo (Adão), geremos uma população de mais 999 indivíduos via clonagem 
-do objeto inicial (Adão). A cada clonagem, um sorteio entre 3 características (idade, sexo e estado civil) é feito randomizar a população em algum destas 3 características.
-Executando várias vezes, nota-se um certo padrão na distribuição da população por faixa etária.
+No exemplo, a partir de 1 indivíduo (Adão), geramos uma população de mais 999 indivíduos via clonagem do objeto inicial (Adão).
+A cada clonagem, um sorteio entre 3 características (idade, sexo e estado civil) é feito para randomizar a população em alguma destas 3 características.
+Executando várias vezes, nota-se um certo padrão na distribuição da população por faixa etária. Saberia dizer porquê acontece ? :smiley:
