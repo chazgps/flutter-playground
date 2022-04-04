@@ -1,7 +1,8 @@
+import 'package:cli/prototype/clone_abstract.dart';
 import 'package:cli/prototype/pessoa.dart';
 import 'package:cli/prototype/pessoas_caracteristicas.dart';
 
-class PessoaClone extends Pessoa {
+class PessoaClone extends Pessoa implements IClone<PessoaClone> {
   PessoaClone(
       {required int idade,
       required Sexo sexo,
@@ -10,11 +11,12 @@ class PessoaClone extends Pessoa {
 
   // A clonagem se dá pela cópia de todos os atributos, ou seja, o clone
   // é uma cópia identica do estado do objeto clonado.
+  @override
   PessoaClone clone() {
     return PessoaClone(
-      idade: super.idade,
-      sexo: super.sexo,
-      estadoCivil: super.estadoCivil,
+      idade: idade,
+      sexo: sexo,
+      estadoCivil: estadoCivil,
     );
   }
 }
