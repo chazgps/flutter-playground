@@ -1,6 +1,6 @@
-import 'package:cli/prototype/clone_abstract.dart';
-import 'package:cli/prototype/pessoa.dart';
-import 'package:cli/prototype/pessoas_caracteristicas.dart';
+import 'package:cli/creational/prototype/clone_abstract.dart';
+import 'package:cli/creational/prototype/pessoa.dart';
+import 'package:cli/creational/prototype/pessoas_caracteristicas.dart';
 
 class PessoaClone extends Pessoa implements IClone<PessoaClone> {
   PessoaClone(

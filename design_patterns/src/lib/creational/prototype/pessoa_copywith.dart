@@ -1,5 +1,5 @@
-import 'package:cli/prototype/pessoa.dart';
-import 'package:cli/prototype/pessoas_caracteristicas.dart';
+import 'package:cli/creational/prototype/pessoa.dart';
+import 'package:cli/creational/prototype/pessoas_caracteristicas.dart';
 
 class PessoaCopyWith extends Pessoa {
   PessoaCopyWith(

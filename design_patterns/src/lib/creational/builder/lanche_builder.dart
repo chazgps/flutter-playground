@@ -1,5 +1,5 @@
-import 'package:cli/builder/ingrediente.dart';
-import 'package:cli/builder/lanche.dart';
+import 'package:cli/creational/builder/ingrediente.dart';
+import 'package:cli/creational/builder/lanche.dart';
 
 abstract class LancheBuilder {
   late final Lanche _lanche;

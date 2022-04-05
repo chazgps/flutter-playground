@@ -1,4 +1,4 @@
-import 'package:cli/prototype/pessoas_caracteristicas.dart';
+import 'package:cli/creational/prototype/pessoas_caracteristicas.dart';
 
 class Pessoa {
   late int idade;

@@ -1,6 +1,6 @@
 import 'package:args/command_runner.dart';
-import 'package:cli/factory/hash_generator_abstract.dart';
-import 'package:cli/factory/hash_factory.dart';
+import 'package:cli/creational/factory/hash_generator_abstract.dart';
+import 'package:cli/creational/factory/hash_factory.dart';
 
 class FactoryCommand extends Command {
   @override
@@ -30,6 +30,11 @@ class FactoryCommand extends Command {
       default:
         throw Exception('Função de Hash inválida');
     }
+
+    final String titulo = "Design Pattern: Factory";
+
+    print(titulo);
+    print(''.padRight(titulo.length, '=') + '\n');
 
     final String stringEntrada = 'Batatinha frita 1,2,3.';
     print('Conteúdo de entrada = "$stringEntrada"');

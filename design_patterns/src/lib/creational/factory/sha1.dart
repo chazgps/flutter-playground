@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:cli/factory/hash_generator_abstract.dart';
+import 'package:cli/creational/factory/hash_generator_abstract.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:convert/convert.dart';
 

@@ -1,9 +1,9 @@
 import 'package:args/command_runner.dart';
-import 'package:cli/builder/cachorro_quente_builder.dart';
-import 'package:cli/builder/lanche.dart';
-import 'package:cli/builder/lanche_builder.dart';
-import 'package:cli/builder/montador.dart';
-import 'package:cli/builder/x_tudo_builder.dart';
+import 'package:cli/creational/builder/cachorro_quente_builder.dart';
+import 'package:cli/creational/builder/lanche.dart';
+import 'package:cli/creational/builder/lanche_builder.dart';
+import 'package:cli/creational/builder/montador.dart';
+import 'package:cli/creational/builder/x_tudo_builder.dart';
 import 'package:intl/intl.dart';
 
 class BuilderCommand extends Command {

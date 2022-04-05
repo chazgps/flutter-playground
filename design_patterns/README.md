@@ -54,3 +54,19 @@ Preferencialmente gosto da abordagem Flutter pois permite informar se algum atri
 No exemplo, a partir de 1 indivíduo (Adão), geramos uma população de mais 999 indivíduos via clonagem do objeto inicial (Adão).
 A cada clonagem, um sorteio entre 3 características (idade, sexo e estado civil) é feito para randomizar a população em alguma destas 3 características.
 Executando várias vezes, nota-se um certo padrão na distribuição da população por faixa etária. Saberia dizer porquê acontece ? :smiley:
+
+---
+
+### **Abstract Factory**
+
+Define a maneira pela qual uma classe pode criar fábricas de objetos relacionados mas sem especificar suas implementações concretas.
+
+Seria como ter vários objetos do padrão Factory controlados por um objeto master, mas o master não sabe qual implementação de factory seus filhos irão ter, ficará a critério de cada factory tomar esta decisão.
+
+No exemplo, criei um Advisor (Vendedor) para recomendar a configuração de um computador para 3 perfis de usuários diferentes:
+
+- Usuário básico: Só irá acessar a Internet e usar aplicações leves
+- Usuário dev: Uso profissional e precisa de uma máquina potente ! Nas horas vagas gosta de usar para jogos.
+- Usuário corporativo: Precisa ter um equilíbrio, não pode ser tão básica, mas não precisa ser potente, é para o usuário médio.
+
+O vendedor delega a resposabilidade de escolher se é um desktop ou notebook, qual memória, CPU e armazenamento para as classes factory, conforme o perfil do usuário.

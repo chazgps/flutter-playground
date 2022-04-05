@@ -1,5 +1,5 @@
-import 'package:cli/factory/hash_generator_abstract.dart';
-import 'package:cli/factory/md5.dart';
+import 'package:cli/creational/factory/hash_generator_abstract.dart';
+import 'package:cli/creational/factory/md5.dart';
 
 import 'sha1.dart';
 

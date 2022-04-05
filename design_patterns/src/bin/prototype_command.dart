@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:args/command_runner.dart';
-import 'package:cli/prototype/pessoa.dart';
-import 'package:cli/prototype/pessoa_copywith.dart';
-import 'package:cli/prototype/pessoa_clone.dart';
-import 'package:cli/prototype/pessoas_caracteristicas.dart';
+import 'package:cli/creational/prototype/pessoa.dart';
+import 'package:cli/creational/prototype/pessoa_copywith.dart';
+import 'package:cli/creational/prototype/pessoa_clone.dart';
+import 'package:cli/creational/prototype/pessoas_caracteristicas.dart';
 
 class PrototypeCommand extends Command {
   @override

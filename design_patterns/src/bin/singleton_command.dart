@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:cli/singleton/app_settings.dart';
+import 'package:cli/creational/singleton/app_settings.dart';
 
 class SingletonCommand extends Command {
   @override

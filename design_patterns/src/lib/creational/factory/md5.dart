@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:convert/convert.dart';
-import 'package:cli/factory/hash_generator_abstract.dart';
+import 'package:cli/creational/factory/hash_generator_abstract.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
 class MD5 implements IHashGenerator {

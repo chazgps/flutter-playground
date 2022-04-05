@@ -52,6 +52,13 @@
             "type": "dart",
             "program":"bin/cli.dart",
             "args": ["prototype","--metodo=clone"]
+        },
+        {
+            "name": "abstract factory",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["abstract_factory"]
         }
     ]
 }

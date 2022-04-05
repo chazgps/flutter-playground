@@ -1,4 +1,4 @@
-import 'package:cli/builder/ingrediente.dart';
+import 'package:cli/creational/builder/ingrediente.dart';
 
 class Lanche {
   late final List<Ingrediente> _ingredientes;
