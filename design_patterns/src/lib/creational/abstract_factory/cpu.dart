@@ -1,10 +1,10 @@
-abstract class CPU {
+abstract class ICPU {
   String get nome;
   String get velocidade;
   String get nucleos;
 }
 
-class CPUI3 extends CPU {
+class CPUI3 extends ICPU {
   @override
   String get nome => 'Intel Core i3';
 
@@ -15,7 +15,7 @@ class CPUI3 extends CPU {
   String get nucleos => '2 núcleos';
 }
 
-class CPUI5 extends CPU {
+class CPUI5 extends ICPU {
   @override
   String get nome => 'Intel Core i5';
 
@@ -26,7 +26,7 @@ class CPUI5 extends CPU {
   String get nucleos => '4 núcleos';
 }
 
-class CPUI7 extends CPU {
+class CPUI7 extends ICPU {
   @override
   String get nome => 'Intel Core i7';
 

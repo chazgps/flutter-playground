@@ -1,9 +1,9 @@
-abstract class Memoria {
+abstract class IMemoria {
   String get tipo;
   String get capacidade;
 }
 
-class MemoriaDDR1 extends Memoria {
+class MemoriaDDR1 extends IMemoria {
   @override
   String get tipo => 'DDR1';
 
@@ -11,7 +11,7 @@ class MemoriaDDR1 extends Memoria {
   String get capacidade => '4GB';
 }
 
-class MemoriaDDR4 extends Memoria {
+class MemoriaDDR4 extends IMemoria {
 @override
   String get tipo => 'DDR4';
 

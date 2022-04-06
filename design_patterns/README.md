@@ -5,9 +5,8 @@ Estudo sobre design patterns em Dart.
 
 A idéia é ilustrar design patterns na linguagem Dart.
 
-A aplicação exemplo foi codificada como um projeto projeto Dart CLI (command-line interface), onde
-através da linha de comando pode ser passado valores indicando quais padrões se quer que sejam
-demonstrados.
+A aplicação exemplo foi codificada como um projeto Dart CLI (command-line interface), onde
+pode ser passado valores indicando qual design pattern pode ser demonstrado.
 
 Exemplo:
     - bin\cli.exe singleton
@@ -61,12 +60,8 @@ Executando várias vezes, nota-se um certo padrão na distribuição da populaç
 
 Define a maneira pela qual uma classe pode criar fábricas de objetos relacionados mas sem especificar suas implementações concretas.
 
-Seria como ter vários objetos do padrão Factory controlados por um objeto master, mas o master não sabe qual implementação de factory seus filhos irão ter, ficará a critério de cada factory tomar esta decisão.
-
-No exemplo, criei um Advisor (Vendedor) para recomendar a configuração de um computador para 3 perfis de usuários diferentes:
+No exemplo, criei um LojaFactory, com uma subclasse, que a partir do perfil do usuário, recomenda a configuração de um computador para 3 perfis de usuários diferentes:
 
 - Usuário básico: Só irá acessar a Internet e usar aplicações leves
 - Usuário dev: Uso profissional e precisa de uma máquina potente ! Nas horas vagas gosta de usar para jogos.
 - Usuário corporativo: Precisa ter um equilíbrio, não pode ser tão básica, mas não precisa ser potente, é para o usuário médio.
-
-O vendedor delega a resposabilidade de escolher se é um desktop ou notebook, qual memória, CPU e armazenamento para as classes factory, conforme o perfil do usuário.

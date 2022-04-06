@@ -4,20 +4,20 @@ import 'package:cli/creational/abstract_factory/armazenamento.dart';
 import 'package:cli/creational/abstract_factory/cpu.dart';
 import 'package:cli/creational/abstract_factory/memoria.dart';
 
-abstract class Computador {
-  late CPU cpu;
-  late Memoria memoria;
-  late Armazenamento armazenamento;
+abstract class IComputador {
+  late ICPU cpu;
+  late IMemoria memoria;
+  late IArmazenamento armazenamento;
 
-  Computador(this.cpu, this.memoria, this.armazenamento);
+  IComputador(this.cpu, this.memoria, this.armazenamento);
 }
 
-class NoteBook extends Computador {
-  NoteBook(CPU cpu, Memoria memoria, Armazenamento armazenamento)
+class NoteBook extends IComputador {
+  NoteBook(ICPU cpu, IMemoria memoria, IArmazenamento armazenamento)
       : super(cpu, memoria, armazenamento);
 }
 
-class Desktop extends Computador {
-  Desktop(CPU cpu, Memoria memoria, Armazenamento armazenamento)
+class Desktop extends IComputador {
+  Desktop(ICPU cpu, IMemoria memoria, IArmazenamento armazenamento)
       : super(cpu, memoria, armazenamento);
 }

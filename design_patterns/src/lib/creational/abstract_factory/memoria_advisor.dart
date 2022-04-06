@@ -1,21 +1,21 @@
-import 'package:cli/creational/abstract_factory/vendedor_advisor.dart';
+import 'package:cli/creational/abstract_factory/loja_factory.dart';
 import 'package:cli/creational/abstract_factory/memoria.dart';
 
-abstract class IMemoriaFactory {
-  Memoria getMemoria(tipoUsuario tipo);
+abstract class IMemoriaAdvisorFactory {
+  IMemoria getMemoria(TipoUsuario tipo);
 }
 
-class MemoriaFactory implements IMemoriaFactory {
+class MemoriaFactory implements IMemoriaAdvisorFactory {
   @override
-  Memoria getMemoria(tipoUsuario tipo) {
-    switch (tipo) {
-      case tipoUsuario.basico:
+  IMemoria getMemoria(TipoUsuario tipoUsuario) {
+    switch (tipoUsuario) {
+      case TipoUsuario.basico:
         return MemoriaDDR1();
 
-      case tipoUsuario.dev:
+      case TipoUsuario.dev:
         return MemoriaDDR4();
 
-      case tipoUsuario.corporativo:
+      case TipoUsuario.corporativo:
         return MemoriaDDR1();
     }
   }

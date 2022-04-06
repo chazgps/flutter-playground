@@ -1,21 +1,21 @@
-import 'package:cli/creational/abstract_factory/vendedor_advisor.dart';
+import 'package:cli/creational/abstract_factory/loja_factory.dart';
 import 'package:cli/creational/abstract_factory/cpu.dart';
 
 abstract class ICPUFactory {
-  CPU getCPU(tipoUsuario tipo);
+  ICPU getCPU(TipoUsuario tipo);
 }
 
 class CPUFactory implements ICPUFactory {
   @override
-  CPU getCPU(tipoUsuario tipo) {
-    switch (tipo) {
-      case tipoUsuario.basico:
+  ICPU getCPU(TipoUsuario tipoUsuario) {
+    switch (tipoUsuario) {
+      case TipoUsuario.basico:
         return CPUI3();
 
-      case tipoUsuario.dev:
+      case TipoUsuario.dev:
         return CPUI7();
 
-      case tipoUsuario.corporativo:
+      case TipoUsuario.corporativo:
         return CPUI5();
     }
   }

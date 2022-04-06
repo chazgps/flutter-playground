@@ -1,9 +1,9 @@
-abstract class Armazenamento {
+abstract class IArmazenamento {
   String get tipo;
   String get velocidade;
 }
 
-class ArmazenamentoHDD extends Armazenamento {
+class ArmazenamentoHDD extends IArmazenamento {
   @override
   String get tipo => 'HDD';
 
@@ -11,7 +11,7 @@ class ArmazenamentoHDD extends Armazenamento {
   String get velocidade => '50 MB/s para escrita, e até 120 MB/s para leitura';
 }
 
-class ArmazenamentoSSD extends Armazenamento {
+class ArmazenamentoSSD extends IArmazenamento {
   @override
   String get tipo => 'SSD';
 

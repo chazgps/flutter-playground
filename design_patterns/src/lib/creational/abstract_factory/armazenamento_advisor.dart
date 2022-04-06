@@ -1,21 +1,21 @@
-import 'package:cli/creational/abstract_factory/vendedor_advisor.dart';
+import 'package:cli/creational/abstract_factory/loja_factory.dart';
 import 'package:cli/creational/abstract_factory/armazenamento.dart';
 
 abstract class IArmazenamentoFactory {
-  Armazenamento getArmazenamento(tipoUsuario tipo);
+  IArmazenamento getArmazenamento(TipoUsuario tipo);
 }
 
 class ArmazenamentoFactory implements IArmazenamentoFactory {
   @override
-  Armazenamento getArmazenamento(tipoUsuario tipo) {
-    switch (tipo) {
-      case tipoUsuario.basico:
+  IArmazenamento getArmazenamento(TipoUsuario tipoUsuario) {
+    switch (tipoUsuario) {
+      case TipoUsuario.basico:
         return ArmazenamentoHDD();
 
-      case tipoUsuario.dev:
+      case TipoUsuario.dev:
         return ArmazenamentoSSD();
 
-      case tipoUsuario.corporativo:
+      case TipoUsuario.corporativo:
         return ArmazenamentoHDD();
     }
   }

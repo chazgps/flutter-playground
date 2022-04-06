@@ -1,55 +1,44 @@
-import 'package:cli/creational/abstract_factory/vendedor_advisor.dart';
+import 'package:cli/creational/abstract_factory/loja_factory.dart';
 import 'package:cli/creational/abstract_factory/armazenamento.dart';
 import 'package:cli/creational/abstract_factory/computador.dart';
 import 'package:cli/creational/abstract_factory/cpu.dart';
 import 'package:cli/creational/abstract_factory/memoria.dart';
 
 abstract class IComputadorFactory {
-  ComputadorAdvisor recomendePara(tipoUsuario tipo);
-  ComputadorAdvisor comMemoria(Memoria memoria);
-  ComputadorAdvisor comCPU(CPU cpu);
-  ComputadorAdvisor comArmazenamento(Armazenamento armazenamento);
-  Computador construir();
+  ComputadorAdvisor comMemoria(IMemoria memoria);
+  ComputadorAdvisor comCPU(ICPU cpu);
+  ComputadorAdvisor comArmazenamento(IArmazenamento armazenamento);
+  IComputador construir(TipoUsuario tipo);
 }
 
 enum tipoComputador { desktop, notebook }
 
 class ComputadorAdvisor implements IComputadorFactory {
-  late tipoComputador _computadorEscolhido;
-  late Memoria _memoriaEscolhida;
-  late CPU _cpuEscolhida;
-  late Armazenamento _armazenamentoEscolhido;
+  late IMemoria _memoriaEscolhida;
+  late ICPU _cpuEscolhida;
+  late IArmazenamento _armazenamentoEscolhido;
 
+  /// Aqui é onde ocorre a escolha do tipo de computador conforme o tipo de usuário
+  /// Esta implementação é simples, mas poderia ter lógicas mais complexas levando
+  /// em consideração os tipos de cada componente escolhido (cpu, memória e armazenamento)
   @override
-  ComputadorAdvisor recomendePara(tipoUsuario tipo) {
-    switch (tipo) {
-      case tipoUsuario.basico:
-        _computadorEscolhido = tipoComputador.notebook;
-        return this;
+  IComputador construir(TipoUsuario tipoUsuario) {
+    final IComputador computadorEscolhido;
 
-      case tipoUsuario.dev:
-        _computadorEscolhido = tipoComputador.notebook;
-        return this;
-
-      case tipoUsuario.corporativo:
-        _computadorEscolhido = tipoComputador.desktop;
-        return this;
-    }
-  }
-
-  @override
-  Computador construir() {
-    final Computador computadorEscolhido;
-
-    switch (_computadorEscolhido) {
-      case tipoComputador.desktop:
-        computadorEscolhido =
-            Desktop(_cpuEscolhida, _memoriaEscolhida, _armazenamentoEscolhido);
-        break;
-
-      case tipoComputador.notebook:
+    switch (tipoUsuario) {
+      case TipoUsuario.basico:
         computadorEscolhido =
             NoteBook(_cpuEscolhida, _memoriaEscolhida, _armazenamentoEscolhido);
+        break;
+
+      case TipoUsuario.dev:
+        computadorEscolhido =
+            NoteBook(_cpuEscolhida, _memoriaEscolhida, _armazenamentoEscolhido);
+        break;
+
+      case TipoUsuario.corporativo:
+        computadorEscolhido =
+            Desktop(_cpuEscolhida, _memoriaEscolhida, _armazenamentoEscolhido);
         break;
     }
 
@@ -57,19 +46,19 @@ class ComputadorAdvisor implements IComputadorFactory {
   }
 
   @override
-  ComputadorAdvisor comArmazenamento(Armazenamento armazenamento) {
+  ComputadorAdvisor comArmazenamento(IArmazenamento armazenamento) {
     _armazenamentoEscolhido = armazenamento;
     return this;
   }
 
   @override
-  ComputadorAdvisor comCPU(CPU cpu) {
+  ComputadorAdvisor comCPU(ICPU cpu) {
     _cpuEscolhida = cpu;
     return this;
   }
 
   @override
-  ComputadorAdvisor comMemoria(Memoria memoria) {
+  ComputadorAdvisor comMemoria(IMemoria memoria) {
     _memoriaEscolhida = memoria;
     return this;
   }
