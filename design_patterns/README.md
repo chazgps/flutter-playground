@@ -65,3 +65,18 @@ No exemplo, criei um LojaFactory, com uma subclasse, que a partir do perfil do u
 - Usuário básico: Só irá acessar a Internet e usar aplicações leves
 - Usuário dev: Uso profissional e precisa de uma máquina potente ! Nas horas vagas gosta de usar para jogos.
 - Usuário corporativo: Precisa ter um equilíbrio, não pode ser tão básica, mas não precisa ser potente, é para o usuário médio.
+
+Padrões Estruturais (Structural Patterns)
+========================================
+
+### **Adapter**
+
+Permite que trabalhemos com dois objetos com interfaces incompatíveis entre si.
+
+No exemplo, criei uma calculadora do *[IMC]: Índice de Massa Corporal.
+É solicitado ao usuário que forneça seu peso e altura e ela calcula o IMC e fornece uma classificação.
+
+Para demonstrar o design pattern Adapter, imaginemos que um usuário americano
+quisesse usar nossa calculadora, mas ele trabalha com *Pounds* para peso e
+*Feets* para altura. Então temos um Adapter que possibilita nossa calculadora
+continuar funcionando mesmo não sendo compatível com este sistema de medidas.

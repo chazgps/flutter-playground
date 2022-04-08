@@ -59,6 +59,13 @@
             "type": "dart",
             "program":"bin/cli.dart",
             "args": ["abstract_factory"]
+        },
+        {
+            "name": "adapter",
+            "request": "launch",
+            "type": "dart",
+            "program":"bin/cli.dart",
+            "args": ["adapter"]
         }
     ]
 }

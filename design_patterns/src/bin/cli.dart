@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 
 import 'abstract_factory_command.dart';
+import 'adapter_command.dart';
 import 'builder.command.dart';
 import 'factory_command.dart';
 import 'prototype_command.dart';
@@ -13,7 +14,8 @@ void main(List<String> arguments) {
         ..addCommand(FactoryCommand())
         ..addCommand(BuilderCommand())
         ..addCommand(PrototypeCommand())
-        ..addCommand(AbstractFactoryCommand());
+        ..addCommand(AbstractFactoryCommand())
+        ..addCommand(AdapterCommand());
 
   runner.run(arguments).catchError((error) {
     if (error is! UsageException) throw error;
