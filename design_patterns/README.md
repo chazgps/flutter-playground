@@ -73,7 +73,7 @@ Padrões Estruturais (Structural Patterns)
 
 Permite que trabalhemos com dois objetos com interfaces incompatíveis entre si.
 
-No exemplo, criei uma calculadora do *[IMC]: Índice de Massa Corporal.
+No exemplo, criei uma calculadora do IMC (Índice de Massa Corporal).
 É solicitado ao usuário que forneça seu peso e altura e ela calcula o IMC e fornece uma classificação.
 
 Para demonstrar o design pattern Adapter, imaginemos que um usuário americano
