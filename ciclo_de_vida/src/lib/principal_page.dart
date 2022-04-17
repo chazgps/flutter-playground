@@ -44,6 +44,12 @@ class PrincipalPage extends StatelessWidget with LifeCycleMonitor {
     _log.add('App pausada às ' + _getDataHora());
   }
 
+  @override
+  void onLoad() {
+    print('Método build() executado pela primeira vez.');
+    _log.add('Build() executado pela primeira vez às ' + _getDataHora());
+  }
+
   String _getDataHora() {
     final DateTime data = DateTime.now();
     final DateFormat formatador = DateFormat("HH:mm:ss 'de' dd/MM/yyyy");

@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 mixin LifeCycleMonitor implements WidgetsBindingObserver {
-  
   void initLifeCycleMonitor() {
     WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => this.onLoad());
   }
 
   @override
@@ -29,6 +30,8 @@ mixin LifeCycleMonitor implements WidgetsBindingObserver {
   void onResume() {}
 
   void onPause() {}
+
+  void onLoad() {}
 
   @override
   void didChangeAccessibilityFeatures() {}
