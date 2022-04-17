@@ -8,7 +8,7 @@ Experimentos
 ============
 
 - [tts](./tts) - Estudo sobre Síntese de Fala (Text-to-Speech).
-- [on_pause](./ciclo_de_vida) - Estudo sobre ciclo de vida (pause/resume) de Stateless e StatefulWidgets.
+- [ciclo_de_vida](./ciclo_de_vida) - Estudo sobre ciclo de vida (pause/resume) de Stateless e StatefulWidgets.
 - [cronômetro](./cronometro) - Estudo sobre reatividade utilizando ValueNotifier.
 - [firebase_auth](./firebase_auth) - Implementação de autenticação de usuário usando a Firebase Authentication API.
 - [firebase_firestore](./firebase_firestore) - Implementação de um app estilo 'To-Do List' usando a Firebase Firestore API.
