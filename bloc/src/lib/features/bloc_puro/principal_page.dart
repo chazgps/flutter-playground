@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'principal_bloc.dart';
-import 'principal_events.dart';
-import 'principal_states.dart';
+import '../flutter_bloc/com_plugin_page.dart';
+import 'bloc_puro.dart';
+import '../principal_event.dart';
+import '../principal_state.dart';
 
 class PrincipalPage extends StatefulWidget {
   const PrincipalPage({Key? key}) : super(key: key);
@@ -11,13 +12,13 @@ class PrincipalPage extends StatefulWidget {
 }
 
 class _PrincipalPageState extends State<PrincipalPage> {
-  late final PrincipalBloc _bloc;
+  late final BlocPuro _bloc;
 
   @override
   void initState() {
     super.initState();
 
-    _bloc = PrincipalBloc();
+    _bloc = BlocPuro();
     _bloc.entrada.add(LoadingEvent());
   }
 
@@ -34,25 +35,45 @@ class _PrincipalPageState extends State<PrincipalPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [_getContador(), _getContador(), _getContador()],
+          children: [
+            _getContador(),
+            _getContador(),
+            _getContador(),
+            const SizedBox(height: 50),
+            ElevatedButton(
+              child: const Text('Bloc com Plugin'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const ComPluginPage(),
+                  ),
+                );
+              },
+            )
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Stack(
         fit: StackFit.expand,
         children: [
-          Positioned( left: 30,
+          Positioned(
+            left: 30,
             bottom: 20,
             child: FloatingActionButton(
+              heroTag: "removeSemPlugin",
               child: const Icon(Icons.remove),
               onPressed: () {
                 _bloc.entrada.add(DecrementoEvent());
               },
             ),
           ),
-          Positioned(bottom: 20,
+          Positioned(
+            bottom: 20,
             right: 30,
             child: FloatingActionButton(
+              heroTag: "addSemPlugin",
               child: const Icon(Icons.add),
               onPressed: () {
                 _bloc.entrada.add(IncrementoEvent());

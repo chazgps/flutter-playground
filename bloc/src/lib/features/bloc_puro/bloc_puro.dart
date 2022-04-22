@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import '../bloc.dart';
-import 'principal_states.dart';
-import 'principal_events.dart';
+import 'bloc_abstract.dart';
+import '../principal_state.dart';
+import '../principal_event.dart';
 
-class PrincipalBloc implements Bloc {
+class BlocPuro implements Bloc {
   late int _contador;
   late final StreamController<PrincipalEvent> _eventosController;
   late final StreamController<PrincipalState> _estadosController;
   late final Stream<PrincipalState> _streamEstados;
 
-  PrincipalBloc() {
+  BlocPuro() {
     _eventosController = StreamController<PrincipalEvent>();
     _eventosController.stream.listen(_mapEventToState);
 

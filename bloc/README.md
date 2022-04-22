@@ -2,16 +2,20 @@ Sobre o app
 ====================
 
 Estudo sobre implementação de gerencia de estados utilizando a arquitetura Bloc.
+Fiz a implementação tanto sem usar plugin, como usando o plugin **flutter_bloc**.
 
 App de exemplo baseado no app Contador que é criado como exemplo para cada novo projeto Flutter.
 
-Aqui, implementamos 3 observadores (StreamBuilders) que vão ficar escutando eventos sendo gerados pelo objeto Bloc.
+Na página principal do app, é feita a implementação sem usar qualquer plugin.
+Foi implementado 3 contadores que "escutam" alterações em um bloc via StreamBuilder.
 
-Temos o evento de incrementar o contador e decrementar e 3 contadores simulam diferentes partes do app que poderiam estar sendo atualizadas baseadas no novo estado sendo emitido pelo objeto Bloc.
+Na 2a página, o mesmo exemplo só que usando BlocProvider/BlocBuilder para conferir reatividade a aplicação
+e manutenção do estado do Bloc entre telas.
 
 Tela do app
 ============
 
 |&nbsp;|&nbsp;|
 |----|----|
-|![Tela principal)](./screenshots/1-principal.png)|Tela do app|
+|![Bloc puro)](./screenshots/1-bloc.png)|Bloc puro|
+|![Bloc com BlocProvider e BlocBuilder)](./screenshots/2-flutter_bloc.png)|BlocProvider/BlocBuilder|
